@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import LoginForm from './components/LoginForm';
+import Projects from './components/Projects';
+import RegisterForm from './components/RegisterForm';
 
 function App() {
     const [username, setUsername] = useState('');
@@ -9,89 +12,100 @@ function App() {
     const [dob, setDob] = useState('');
     const [password, setPassword] = useState('');
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const [projects, setProjects] = useState([]);
+
     const handleRegister = async (e) => {
-      e.preventDefault();
+        e.preventDefault();
 
-      const info = {username, name, email, phone, city, dob, password};
+        const info = { username, name, email, phone, city, dob, password };
 
-      const response = await fetch('http://localhost:3000/authentication', {
-        method: 'POST',
-        body: JSON.stringify(info),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-    }
+        const response = await fetch('http://localhost:3000/authentication', {
+            method: 'POST',
+            body: JSON.stringify(info),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        setUsername('');
+        setName('');
+        setEmail('');
+        setPhone('');
+        setCity('');
+        setDob('');
+        setPassword('');
+        setIsAuthenticated(true);
+
+        const json = await response.json();
+        console.log(json.projects);
+        setProjects(json.projects);
+    };
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        const info = { username, password };
+
+        const response = await fetch(
+            'http://localhost:3000/authentication/login',
+            {
+                method: 'POST',
+                body: JSON.stringify(info),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        setUsername('');
+        setPassword('');
+        setIsAuthenticated(true);
+
+        const json = await response.json();
+        setProjects(json.projects);
+    };
+
+    const handleChange = () => {
+        setIsLoggedIn(!isLoggedIn);
+    };
 
     return (
         <div className="App">
             <h1>Project Info</h1>
-            <form onSubmit={handleRegister}>
-                <label htmlFor="username">Username</label>
-                <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    required
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <label htmlFor="name">Name</label>
-                <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <label htmlFor="email">Email</label>
-                <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <label htmlFor="phone">Phone</label>
-                <input
-                    type="number"
-                    name="phone"
-                    id="phone"
-                    required
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                />
-                <label htmlFor="city">City</label>
-                <input
-                    type="text"
-                    name="city"
-                    id="city"
-                    required
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                />
-                <label htmlFor="dob">Dob</label>
-                <input
-                    type="date"
-                    name="dob"
-                    id="dob"
-                    required
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
-                />
-                <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Register</button>
-            </form>
+            {!isAuthenticated ? (
+                !isLoggedIn ? (
+                    <RegisterForm
+                        username={username}
+                        setUsername={setUsername}
+                        name={name}
+                        setName={setName}
+                        email={email}
+                        setEmail={setEmail}
+                        phone={phone}
+                        setPhone={setPhone}
+                        city={city}
+                        setCity={setCity}
+                        dob={dob}
+                        setDob={setDob}
+                        password={password}
+                        setPassword={setPassword}
+                        handleRegister={handleRegister}
+                        handleChange={handleChange}
+                    />
+                ) : (
+                    <LoginForm
+                        handleLogin={handleLogin}
+                        username={username}
+                        password={password}
+                        handleChange={handleChange}
+                        setUsername={setUsername}
+                        setPassword={setPassword}
+                    />
+                )
+            ) : (
+                <Projects projects={projects} />
+            )}
         </div>
     );
 }
