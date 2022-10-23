@@ -85,6 +85,7 @@ h1 {
 }
 
 .profile-wrapper {
+    margin-top: var(--_size);
     text-align: left;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -219,4 +220,41 @@ p {
         0 0 0 hsl(var(--accent) / 0.3),
         0 0 0 0.2em hsl(var(--bg)),
         0 0 0 0.4em hsl(var(--accent) / 0.5);
+}
+
+.project {
+    border: 5px solid hsl(var(--accent));
+    border-radius: var(--_radius);
+    padding: calc(var(--_size) * 0.4);
+    text-align: left;
+    max-width: calc(var(--_size) * 20);
+    display: grid;
+    gap: 0.8em;
+    max-width: calc(var(--_size) * 20);
+    font-size: var(--_size);
+    text-align: left;
+    padding-block: 0.5em;
+}
+
+.project h2 {
+    color: hsl(var(--accent));
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-header p {
+    color: hsl(var(--accent) / 0.5);
+}
+
+.project .date-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.date {
+    color: hsl(var(--accent) / 0.5);
 }
