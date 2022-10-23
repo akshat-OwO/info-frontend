@@ -25,6 +25,8 @@ function App() {
                     setUserDetails={setUserDetails}
                     isLoggedIn={isLoggedIn}
                     setIsLoggedIn={setIsLoggedIn}
+                    iAmIn={iAmIn}
+                    setIAmIn={setIAmIn}
                 />
             )): <Profile userDetails={userDetails} />}
         </div>
