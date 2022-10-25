@@ -12,7 +12,7 @@ const AddProject = ({ userDetails, addingProject, setAddingProject }) => {
 
         const projectDetails = {projectName, description, startDate, endDate, category};
 
-        const response = await fetch('http://localhost:3000/project/' + userDetails.username, {
+        const response = await fetch('https://blush-nightingale-hose.cyclic.app/project/' + userDetails.username, {
             method: 'PATCH',
             body: JSON.stringify(projectDetails),
             headers: {

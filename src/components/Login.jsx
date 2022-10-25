@@ -10,7 +10,7 @@ const Login = ({ userDetails, setUserDetails, isLoggedIn, setIsLoggedIn, iAmIn, 
         const info = { username, password };
 
         const response = await fetch(
-            'http://localhost:3000/authentication/login',
+            'https://blush-nightingale-hose.cyclic.app/authentication/login',
             {
                 method: 'POST',
                 body: JSON.stringify(info),

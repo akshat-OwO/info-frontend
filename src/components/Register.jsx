@@ -15,7 +15,7 @@ const Register = ({userDetails, setUserDetails, isLoggedIn, setIsLoggedIn, iAmIn
 
         const info = {username, name, email, phone, city, dob, password};
 
-        const response = await fetch('http://localhost:3000/authentication', {
+        const response = await fetch('https://blush-nightingale-hose.cyclic.app/authentication', {
             method: 'POST',
             body: JSON.stringify(info),
             headers: {
